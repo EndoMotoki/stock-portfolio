@@ -182,16 +182,61 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .summary-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .card-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .card-header h3 {
+    font-size: 0.75rem;
+  }
+
+  .icon {
+    font-size: 1.25rem;
   }
 
   .card-value {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .portfolio-stats {
-    flex-direction: column;
+    padding: 1rem;
     gap: 1rem;
+  }
+
+  .stat-item {
+    gap: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .summary-card {
+    padding: 0.75rem;
+  }
+
+  .card-value {
+    font-size: 1.125rem;
   }
 }
 </style>
