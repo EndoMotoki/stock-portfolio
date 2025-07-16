@@ -35,10 +35,10 @@
           <td>¥{{ stock.purchasePrice.toLocaleString() }}</td>
           <td>¥{{ stock.currentPrice.toLocaleString() }}</td>
           <td>¥{{ (stock.currentPrice * stock.quantity).toLocaleString() }}</td>
-          <td :class="getGainLossClass(stock)">
+          <td class="gain-loss-cell" :class="getGainLossClass(stock)">
             ¥{{ getGainLoss(stock).toLocaleString() }}
           </td>
-          <td :class="getGainLossClass(stock)">
+          <td class="gain-loss-cell" :class="getGainLossClass(stock)">
             {{ getGainLossPercent(stock) }}%
           </td>
           <td>
@@ -260,6 +260,25 @@ const deleteStock = (id: string) => {
 }
 
 .neutral {
+  color: #6b7280;
+}
+
+.gain-loss-cell {
+  font-weight: 600;
+}
+
+.gain-loss-cell.gain {
+  background-color: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+}
+
+.gain-loss-cell.loss {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+.gain-loss-cell.neutral {
+  background-color: rgba(107, 114, 128, 0.1);
   color: #6b7280;
 }
 
