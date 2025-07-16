@@ -53,7 +53,17 @@
       </div>
       <div class="stat-item">
         <span class="stat-label">ポートフォリオの公開</span>
-        <span class="stat-value">非公開(ここはトグルにしたい)</span>
+        <div class="toggle-container">
+          <label class="toggle-switch">
+            <input 
+              type="checkbox" 
+              v-model="isPublic" 
+              @change="handleToggleChange"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">{{ isPublic ? '公開' : '非公開' }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -71,6 +81,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const currentTime = ref('');
+const isPublic = ref(false);
 
 const stockCount = computed(() => props.stocks.length);
 
@@ -85,6 +96,10 @@ const updateCurrentTime = () => {
   currentTime.value = now.toLocaleString('ja-JP');
 };
 
+const handleToggleChange = () => {
+  // ここで公開状態の変更をAPIに送信したり、状態を保存したりできます
+  console.log('ポートフォリオ公開状態:', isPublic.value ? '公開' : '非公開');
+};
 onMounted(() => {
   updateCurrentTime();
   setInterval(updateCurrentTime, 60000); // 1分ごとに更新
@@ -180,6 +195,69 @@ onMounted(() => {
   font-weight: 600;
 }
 
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #3b82f6;
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.toggle-switch input:focus + .toggle-slider {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.toggle-label {
+  color: #1f2937;
+  font-size: 1.125rem;
+  font-weight: 600;
+  min-width: 40px;
+}
+
 @media (max-width: 768px) {
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -221,6 +299,30 @@ onMounted(() => {
   }
 
   .stat-value {
+    font-size: 0.875rem;
+  }
+
+  .toggle-container {
+    gap: 0.5rem;
+  }
+
+  .toggle-switch {
+    width: 36px;
+    height: 20px;
+  }
+
+  .toggle-slider:before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+  }
+
+  .toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(16px);
+  }
+
+  .toggle-label {
     font-size: 0.875rem;
   }
 }
