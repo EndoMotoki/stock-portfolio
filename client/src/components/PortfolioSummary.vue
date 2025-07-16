@@ -55,10 +55,10 @@
         <span class="stat-label">ポートフォリオの公開</span>
         <div class="toggle-container">
           <label class="toggle-switch">
-            <input 
-              type="checkbox" 
-              v-model="isPublic" 
-              @change="handleToggleChange"
+            <input
+                type="checkbox"
+                v-model="isPublic"
+                @change="handleToggleChange"
             />
             <span class="toggle-slider"></span>
           </label>
@@ -97,7 +97,6 @@ const updateCurrentTime = () => {
 };
 
 const handleToggleChange = () => {
-  // ここで公開状態の変更をAPIに送信したり、状態を保存したりできます
   console.log('ポートフォリオ公開状態:', isPublic.value ? '公開' : '非公開');
 };
 onMounted(() => {

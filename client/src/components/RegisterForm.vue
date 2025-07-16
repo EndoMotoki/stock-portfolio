@@ -2,14 +2,14 @@
   <div class="auth-form">
     <form @submit.prevent="handleSubmit" class="form">
       <div class="form-group">
-        <label for="name">お名前</label>
+        <label for="name">ニックネーム</label>
         <input
             id="name"
             v-model="form.name"
             type="text"
             required
             class="form-input"
-            placeholder="山田太郎"
+            placeholder="やまだ"
         />
       </div>
 
@@ -25,33 +25,33 @@
         />
       </div>
 
-      <div class="form-group">
-        <label for="password">パスワード</label>
-        <input
-            id="password"
-            v-model="form.password"
-            type="password"
-            required
-            minlength="8"
-            class="form-input"
-            placeholder="8文字以上のパスワード"
-        />
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="password">ワンタイムパスワード</label>-->
+<!--        <input-->
+<!--            id="password"-->
+<!--            v-model="form.password"-->
+<!--            type="password"-->
+<!--            required-->
+<!--            minlength="8"-->
+<!--            class="form-input"-->
+<!--            placeholder="メールアドレス宛に送られたワンタイムパスワード"-->
+<!--        />-->
+<!--      </div>-->
 
-      <div class="form-group">
-        <label for="confirmPassword">パスワード確認</label>
-        <input
-            id="confirmPassword"
-            v-model="form.confirmPassword"
-            type="password"
-            required
-            class="form-input"
-            placeholder="パスワードを再入力"
-        />
-        <div v-if="passwordMismatch" class="error-message">
-          パスワードが一致しません
-        </div>
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="confirmPassword">パスワード確認</label>-->
+<!--        <input-->
+<!--            id="confirmPassword"-->
+<!--            v-model="form.confirmPassword"-->
+<!--            type="password"-->
+<!--            required-->
+<!--            class="form-input"-->
+<!--            placeholder="パスワードを再入力"-->
+<!--        />-->
+<!--        <div v-if="passwordMismatch" class="error-message">-->
+<!--          パスワードが一致しません-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="form-group">
         <label class="checkbox-label">
@@ -102,8 +102,8 @@ const passwordMismatch = computed(() => {
 const isFormValid = computed(() => {
   return form.value.name &&
       form.value.email &&
-      form.value.password.length >= 8 &&
-      form.value.password === form.value.confirmPassword &&
+      // form.value.password.length >= 8 &&
+      // form.value.password === form.value.confirmPassword &&
       form.value.agreeToTerms;
 });
 
