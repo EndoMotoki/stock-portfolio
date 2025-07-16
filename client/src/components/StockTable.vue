@@ -56,6 +56,61 @@
       </table>
     </div>
 
+    <!-- モバイル用カードレイアウト -->
+    <div class="mobile-card-layout">
+      <div v-for="stock in filteredStocks" :key="stock.id" class="stock-card">
+        <div class="stock-card-header">
+          <div class="stock-info">
+            <h4>{{ stock.name }}</h4>
+            <div class="stock-code">{{ stock.code }}</div>
+          </div>
+          <div class="stock-card-actions">
+            <button @click="editStock(stock)" class="btn btn-sm btn-edit">
+              編集
+            </button>
+            <button @click="deleteStock(stock.id)" class="btn btn-sm btn-delete">
+              削除
+            </button>
+          </div>
+        </div>
+        
+        <div class="stock-card-body">
+          <div class="stock-detail">
+            <div class="stock-detail-label">保有数量</div>
+            <div class="stock-detail-value">{{ stock.quantity.toLocaleString() }}株</div>
+          </div>
+          
+          <div class="stock-detail">
+            <div class="stock-detail-label">取得単価</div>
+            <div class="stock-detail-value">¥{{ stock.purchasePrice.toLocaleString() }}</div>
+          </div>
+          
+          <div class="stock-detail">
+            <div class="stock-detail-label">現在価格</div>
+            <div class="stock-detail-value">¥{{ stock.currentPrice.toLocaleString() }}</div>
+          </div>
+          
+          <div class="stock-detail">
+            <div class="stock-detail-label">評価額</div>
+            <div class="stock-detail-value">¥{{ (stock.currentPrice * stock.quantity).toLocaleString() }}</div>
+          </div>
+          
+          <div class="stock-detail">
+            <div class="stock-detail-label">損益</div>
+            <div class="stock-detail-value" :class="getGainLossClass(stock)">
+              ¥{{ getGainLoss(stock).toLocaleString() }}
+            </div>
+          </div>
+          
+          <div class="stock-detail">
+            <div class="stock-detail-label">損益率</div>
+            <div class="stock-detail-value" :class="getGainLossClass(stock)">
+              {{ getGainLossPercent(stock) }}%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-if="filteredStocks.length === 0" class="empty-state">
       <p>{{ searchQuery ? '検索結果がありません' : '株式が登録されていません' }}</p>
     </div>
@@ -252,7 +307,88 @@ const deleteStock = (id: string) => {
   color: #6b7280;
 }
 
+/* モバイル用カードレイアウト */
+.mobile-card-layout {
+  display: none;
+}
+
+.stock-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.stock-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.stock-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.stock-info .stock-code {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.125rem;
+}
+
+.stock-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stock-card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.stock-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.stock-detail-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.125rem;
+}
+
+.stock-detail-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.stock-detail-value.gain {
+  color: #16a34a;
+}
+
+.stock-detail-value.loss {
+  color: #dc2626;
+}
+
+.stock-detail-value.neutral {
+  color: #6b7280;
+}
 @media (max-width: 768px) {
+  /* テーブルを非表示にしてカードレイアウトを表示 */
+  .table-responsive {
+    display: none;
+  }
+  
+  .mobile-card-layout {
+    display: block;
+  }
+  
   .table-header {
     flex-direction: column;
     gap: 1rem;
@@ -263,15 +399,9 @@ const deleteStock = (id: string) => {
     min-width: auto;
   }
 
-  .table th,
-  .table td {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.875rem;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-    gap: 0.25rem;
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
   }
 }
 </style>
